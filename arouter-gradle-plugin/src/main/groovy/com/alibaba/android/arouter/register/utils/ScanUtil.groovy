@@ -29,7 +29,7 @@ class ScanUtil {
             while (enumeration.hasMoreElements()) {
                 JarEntry jarEntry = (JarEntry) enumeration.nextElement()
                 String entryName = jarEntry.getName()
-                if (entryName.startsWith(ScanSetting.ROUTER_CLASS_PACKAGE_NAME)) {
+                if (entryName.startsWith(ScanSetting.ROUTER_CLASS_PACKAGE_NAME) && entryName.endsWith(".class")) {
                     InputStream inputStream = file.getInputStream(jarEntry)
                     scanClass(inputStream)
                     inputStream.close()
@@ -44,11 +44,11 @@ class ScanUtil {
     }
 
     static boolean shouldProcessPreDexJar(String path) {
-        return !path.contains("com.android.support") && !path.contains("/android/m2repository")
+        return !path.contains("androidx") && !path.contains("com.android.support") && !path.contains("/android/m2repository")
     }
 
     static boolean shouldProcessClass(String entryName) {
-        return entryName != null && entryName.startsWith(ScanSetting.ROUTER_CLASS_PACKAGE_NAME)
+        return entryName != null && entryName.startsWith(ScanSetting.ROUTER_CLASS_PACKAGE_NAME) && entryName.endsWith(".class")
     }
 
     /**

@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-apply plugin: 'maven'
-apply plugin: 'signing'
+apply plugin: "maven-publish"
 
 version = VERSION_NAME
 group = GROUP
@@ -77,49 +76,30 @@ def configurePom(pom) {
 }
 
 afterEvaluate { project ->
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-                repository(url: getReleaseRepositoryUrl()) {
-                    authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                groupId = group
+                artifactId = POM_ARTIFACT_ID
+                version = version
+                afterEvaluate {
+                    if (plugins.hasPlugin('com.android.application') || plugins.hasPlugin('com.android.library')) {
+                        from components.release
+                    } else if (plugins.hasPlugin("java")) {
+                        from components.java
+                    }
                 }
-                snapshotRepository(url: getSnapshotRepositoryUrl()) {
-                    authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
+                repositories {
+                    maven {
+                        url = "${rootProject.buildDir}/repo"
+                    }
                 }
-
-                configurePom(pom)
             }
         }
-    }
-
-    tasks.create("installLocally", Upload) {
-        configuration = configurations.archives
-
-        repositories {
-            mavenDeployer {
-                repository(url: "file://${rootProject.buildDir}/localMaven")
-
-                configurePom(pom)
-            }
-        }
-    }
-
-    signing {
-        required { isReleaseBuild() && gradle.taskGraph.hasTask("uploadArchives") }
-        sign configurations.archives
     }
 
     if (project.getPlugins().hasPlugin('com.android.application') ||
             project.getPlugins().hasPlugin('com.android.library')) {
-        task install(type: Upload, dependsOn: assemble) {
-            repositories.mavenInstaller {
-                configuration = configurations.archives
-
-                configurePom(pom)
-            }
-        }
 
         task androidJavadocs(type: Javadoc) {
             source = android.sourceSets.main.java.source
@@ -136,11 +116,6 @@ afterEvaluate { project ->
             from android.sourceSets.main.java.source
         }
     } else {
-        install {
-            repositories.mavenInstaller {
-                configurePom(pom)
-            }
-        }
 
         task sourcesJar(type: Jar, dependsOn:classes) {
             classifier = 'sources'

@@ -1,12 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
-    buildToolsVersion BUILDTOOLS_VERSION
+    compileSdk Integer.parseInt(COMPILE_SDK_VERSION)
 
     defaultConfig {
-        minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
-        targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
+        minSdk Integer.parseInt(MIN_SDK_VERSION)
+        targetSdk Integer.parseInt(TARGET_SDK_VERSION)
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -16,13 +15,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildTypes {
         release {
-            debuggable false
             minifyEnabled false
         }
 
@@ -31,9 +29,10 @@ android {
 }
 
 dependencies {
-    annotationProcessor 'com.alibaba:arouter-compiler:1.5.2'
-    api 'com.alibaba:arouter-annotation:1.0.6'
-    implementation "com.android.support:support-v4:${SUPPORT_LIB_VERSION}"
+    annotationProcessor project(':arouter-compiler')
+    api project(':arouter-annotation')
+
+    implementation "androidx.appcompat:appcompat:${ANDROIDX_APPCOMPAT_LIB_VERSION}"
 }
 
 apply from: rootProject.file('gradle/publish.gradle')

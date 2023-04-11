@@ -1,25 +1,19 @@
 buildscript {
-    ext.kotlin_version = '1.4.10'
+    ext.kotlin_version = '1.7.10'
     ext.arouter_register_version = '1.0.2'
 
-    repositories {
-        mavenCentral()
-        google()
-    }
-
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.alibaba:arouter-register:$arouter_register_version"
     }
 }
 
-allprojects {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        google()
-    }
+plugins {
+    id 'com.android.application' version '7.2.1' apply false
+    id 'com.android.library' version '7.2.1' apply false
+    id "org.jetbrains.intellij" version '1.9.0' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
+    id 'org.jetbrains.kotlin.jvm' version '1.7.10' apply false
+    id 'org.jetbrains.kotlin.kapt' version '1.7.10' apply false
 }

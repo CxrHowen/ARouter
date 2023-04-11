@@ -2,18 +2,17 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.alibaba.arouter'
 
 android {
-    compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
-    buildToolsVersion BUILDTOOLS_VERSION
+    compileSdk Integer.parseInt(COMPILE_SDK_VERSION)
 
     defaultConfig {
-        minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
-        targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
+        minSdk Integer.parseInt(MIN_SDK_VERSION)
+        targetSdk Integer.parseInt(TARGET_SDK_VERSION)
         versionName "0.0.1"
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     signingConfigs {
@@ -52,6 +51,5 @@ dependencies {
 
     implementation project(':module-kotlin')
 
-    implementation "com.android.support:support-v4:${SUPPORT_LIB_VERSION}"
-    implementation "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
+    implementation "androidx.appcompat:appcompat:${ANDROIDX_APPCOMPAT_LIB_VERSION}"
 }

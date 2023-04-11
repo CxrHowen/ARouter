@@ -21,7 +21,7 @@ class RegisterTransform extends Transform {
 
     Project project
     static ArrayList<ScanSetting> registerList
-    static File fileContainsInitClass;
+    static File fileContainsInitClass
 
     RegisterTransform(Project project) {
         this.project = project

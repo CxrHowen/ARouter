@@ -7,16 +7,15 @@ dependencies {
 
     implementation project(':module-java-export')
 
-    implementation "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
-    implementation 'com.alibaba:fastjson:1.2.48'
+    implementation "androidx.appcompat:appcompat:${ANDROIDX_APPCOMPAT_LIB_VERSION}"
+    implementation 'com.alibaba:fastjson:1.2.69'
 }
 android {
-    compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
-    buildToolsVersion BUILDTOOLS_VERSION
+    compileSdk Integer.parseInt(COMPILE_SDK_VERSION)
 
     defaultConfig {
-        minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
-        targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
+        minSdk Integer.parseInt(MIN_SDK_VERSION)
+        targetSdk Integer.parseInt(TARGET_SDK_VERSION)
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -26,13 +25,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildTypes {
         release {
-            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
