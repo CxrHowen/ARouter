@@ -1,18 +1,21 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.devtools.ksp'
 
-kapt {
-    arguments {
-        arg("AROUTER_MODULE_NAME", project.getName())
-    }
+//kapt {
+//    arguments {
+//        arg("AROUTER_MODULE_NAME", project.getName())
+//    }
+//}
+ksp {
+    arg("AROUTER_MODULE_NAME", project.getName())
 }
 
 dependencies {
     implementation project(':arouter-api')
     implementation project(':arouter-annotation')
-    kapt project(':arouter-compiler')
+    ksp project(':arouter-compiler')
     implementation "androidx.appcompat:appcompat:${ANDROIDX_APPCOMPAT_LIB_VERSION}"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
@@ -38,4 +41,6 @@ android {
 
         lintOptions { abortOnError false }
     }
+
+    android.sourceSets.all { it.java.srcDir("build/generated/ksp/${it.name}/kotlin/") }
 }

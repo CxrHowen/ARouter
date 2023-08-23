@@ -1,0 +1,3 @@
+com.alibaba.android.arouter.compiler.provider.AutowiredProcessorProvider
+com.alibaba.android.arouter.compiler.provider.InterceptorProcessorProvider
+com.alibaba.android.arouter.compiler.provider.RouteProcessorProviderKt
